@@ -9,9 +9,9 @@ export class UserController {
     private dbService: DbService,
   ) {}
 
-  @Get('user')
+  @Get('users')
   user() {
-    return this.userService.showUser();
+    return this.userService.showUsers();
   }
 
   @Get('db')
