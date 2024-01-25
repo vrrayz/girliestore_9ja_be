@@ -13,6 +13,7 @@ export class AuthService {
       const user = await this.prismaService.user.create({
         data: { ...req, password },
       });
+      delete user.password;
       return { msg: 'User created', user };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
