@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { LoginDto, RegisterDto } from './dto';
+import { GoogleAuthDto, LoginDto, RegisterDto } from './dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -15,5 +15,10 @@ export class AuthController {
   login(@Body() req: LoginDto) {
     console.log('Request coming in == ', req.email);
     return this.authService.login(req);
+  }
+
+  @Post('google-auth')
+  googleAuth(@Body() req: GoogleAuthDto) {
+    return this.authService.googleAuth(req);
   }
 }

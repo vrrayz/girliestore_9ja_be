@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { LoginDto, RegisterDto } from './dto';
+import { GoogleAuthDto, LoginDto, RegisterDto } from './dto';
 import { DbService } from 'src/db/db.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import * as argon from 'argon2';
@@ -45,10 +45,37 @@ export class AuthService {
       throw error;
     }
   }
+  async googleAuth(req: GoogleAuthDto) {
+    try {
+      const payload = await this.jwt.decode(req.access_token);
+      if (payload && payload.iss === 'https://accounts.google.com') {
+        const user = await this.prismaService.user.findUnique({
+          where: { email: payload.email },
+        });
+        if (user) {
+          if (user.authProvider !== 'google') {
+            throw new ForbiddenException('Incorrect Credentials');
+          }
+          return this.signToken(user.id, user.email);
+        }
+        const newUser = await this.prismaService.user.create({
+          data: {
+            name: payload.name,
+            email: payload.email,
+            authProvider: 'google',
+          },
+        });
+        return this.signToken(newUser.id, newUser.email);
+      }
+      throw new ForbiddenException('Incorrect Credentials');
+    } catch (error) {
+      throw error;
+    }
+  }
   async signToken(
     userId: number,
     email: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string; statusCode: number }> {
     const payload = {
       sub: userId,
       email,
@@ -59,6 +86,7 @@ export class AuthService {
     });
 
     return {
+      statusCode: 200,
       access_token: token,
     };
   }
