@@ -13,7 +13,6 @@ export class AuthController {
 
   @Post('login')
   login(@Body() req: LoginDto) {
-    console.log('Request coming in == ', req.email);
     return this.authService.login(req);
   }
 
