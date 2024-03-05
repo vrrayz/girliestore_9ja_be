@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import { DbModule } from './db/db.module';
 import { ConfigModule } from '@nestjs/config';
 import { ShopModule } from './shop/shop.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ShopModule } from './shop/shop.module';
     UserModule,
     DbModule,
     ShopModule,
+    CloudinaryModule,
   ],
   controllers: [],
   providers: [],

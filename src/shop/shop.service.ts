@@ -9,12 +9,12 @@ export class ShopService {
     private prismaService: DbService,
     private userService: UserService,
   ) {}
-  async createShop(email: string, data: ShopDto) {
+  async createShop(email: string, data: ShopDto, imageUrl: any) {
     const user = await this.userService.findUser(email);
     if (user.statusCode === 200) {
       try {
         const shop = await this.prismaService.shop.create({
-          data: { ...data, ownerId: user.message.id },
+          data: { ...data, ownerId: user.message.id, photo_url: imageUrl },
         });
         return { statusCode: 200, message: shop };
       } catch (error) {
