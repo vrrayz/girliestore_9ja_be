@@ -18,7 +18,7 @@ model User {
   bio          String?
   authProvider String?
   shops        Shop[]
-  role         String @default("member") //super_admin , admin , member
+  role         String   @default("member") //super_admin , admin , member
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt
 }
@@ -30,11 +30,10 @@ model Shop {
   owner       User?     @relation(fields: [ownerId], references: [id])
   ownerId     Int?
   photo_url   String?
-  products    Product?  @relation(fields: [productId], references: [id])
+  products    Product[]
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
-  productId   Int?
 }
 
 model Category {
@@ -52,7 +51,8 @@ model Product {
   category    Category? @relation(fields: [categoryId], references: [id])
   photos      Photo[]
   categoryId  Int?
-  shop        Shop[]
+  shop        Shop?     @relation(fields: [shopId], references: [id])
+  shopId      Int
 }
 
 model Photo {

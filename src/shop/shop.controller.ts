@@ -18,7 +18,7 @@ import { ShopDto } from './shop.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { FileResponse, ImageValidationPipe } from './file-type.validator';
+import { FileResponse, ImageValidationPipe } from '../file-type.validator';
 
 @Controller('shop')
 export class ShopController {

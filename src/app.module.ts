@@ -9,6 +9,7 @@ import { AdminMiddleware } from './admin.middleware';
 import { UserService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CategoryModule } from './category/category.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CategoryModule } from './category/category.module';
     ShopModule,
     CloudinaryModule,
     CategoryModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [UserService, JwtService],

@@ -63,4 +63,15 @@ export class ShopService {
     });
     return { statusCode: 200, message: 'Shop Deleted' };
   }
+  async shopAuthorization(shopId: number, email: string) {
+    const shop = await this.findShop(shopId);
+    const user = await this.userService.findUser(email);
+    if (
+      shop.message.ownerId !== user.message.id &&
+      user.message.role !== 'super_admin' &&
+      user.message.role !== 'admin'
+    ) {
+      throw new ForbiddenException('User not owner of this shop');
+    }
+  }
 }
