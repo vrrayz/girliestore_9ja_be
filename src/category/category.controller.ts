@@ -17,6 +17,11 @@ import { AuthGuard } from '@nestjs/passport';
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
+  @Get('')
+  showCategories() {
+    return this.categoryService.categories();
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Post('create')
   create(@Body() categoryDto: CategoryDto) {

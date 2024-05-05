@@ -6,6 +6,12 @@ import { CategoryDto } from './category.dto';
 export class CategoryService {
   constructor(private prismaService: DbService) {}
 
+  async categories() {
+    const categories = await this.prismaService.category.findMany({});
+
+    return { statusCode: 200, data: categories };
+  }
+
   async findCategory(id: number) {
     try {
       const category = await this.prismaService.category.findUniqueOrThrow({
