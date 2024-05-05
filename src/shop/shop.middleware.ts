@@ -21,9 +21,9 @@ export class ShopOwnerMiddleware implements NestMiddleware {
     const user = await this.userService.findUser(authorization.email);
 
     if (
-      shop.message.ownerId !== user.message.id &&
-      user.message.role !== 'super_admin' &&
-      user.message.role !== 'admin'
+      shop.data.ownerId !== user.data.id &&
+      user.data.role !== 'super_admin' &&
+      user.data.role !== 'admin'
     ) {
       throw new ForbiddenException('User not owner of this shop');
     }

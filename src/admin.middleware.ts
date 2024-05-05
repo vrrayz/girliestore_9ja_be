@@ -17,7 +17,7 @@ export class AdminMiddleware implements NestMiddleware {
 
     const user = await this.userService.findUser(authorization.email);
 
-    if (user.message.role !== 'admin' && user.message.role !== 'super_admin') {
+    if (user.data.role !== 'admin' && user.data.role !== 'super_admin') {
       throw new ForbiddenException('User not allowed to perform this action');
     }
     next();

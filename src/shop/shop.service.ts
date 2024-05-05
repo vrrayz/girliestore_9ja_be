@@ -14,9 +14,9 @@ export class ShopService {
     if (user.statusCode === 200) {
       try {
         const shop = await this.prismaService.shop.create({
-          data: { ...data, ownerId: user.message.id, photo_url: imageUrl },
+          data: { ...data, ownerId: user.data.id, photo_url: imageUrl },
         });
-        return { statusCode: 200, message: shop };
+        return { statusCode: 200, data: shop };
       } catch (error) {
         throw error;
       }
@@ -40,7 +40,7 @@ export class ShopService {
         },
       });
 
-      return { statusCode: 200, message: shop };
+      return { statusCode: 200, data: shop };
     } catch (error) {
       if (error.code == 'P2025') throw new ForbiddenException('Shop not found');
       throw error;
@@ -53,7 +53,7 @@ export class ShopService {
       },
       data,
     });
-    return { statusCode: 200, message: shop };
+    return { statusCode: 200, data: shop };
   }
   async deleteShop(id: number) {
     await this.prismaService.shop.delete({
@@ -67,9 +67,9 @@ export class ShopService {
     const shop = await this.findShop(shopId);
     const user = await this.userService.findUser(email);
     if (
-      shop.message.ownerId !== user.message.id &&
-      user.message.role !== 'super_admin' &&
-      user.message.role !== 'admin'
+      shop.data.ownerId !== user.data.id &&
+      user.data.role !== 'super_admin' &&
+      user.data.role !== 'admin'
     ) {
       throw new ForbiddenException('User not owner of this shop');
     }

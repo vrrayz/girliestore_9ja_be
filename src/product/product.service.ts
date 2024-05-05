@@ -18,7 +18,7 @@ export class ProductService {
         },
       });
 
-      return { statusCode: 200, message: category };
+      return { statusCode: 200, data: category };
     } catch (error) {
       if (error.code == 'P2025')
         throw new ForbiddenException('Category not found');
@@ -37,7 +37,7 @@ export class ProductService {
           },
         },
       });
-      return { statusCode: 200, message: product };
+      return { statusCode: 200, data: product };
     } catch (error) {
       throw error;
     }
@@ -49,7 +49,7 @@ export class ProductService {
   //       },
   //       data,
   //     });
-  //     return { statusCode: 200, message: category };
+  //     return { statusCode: 200, data: category };
   //   }
   //   async deleteCategory(id: number) {
   //     await this.prismaService.category.delete({

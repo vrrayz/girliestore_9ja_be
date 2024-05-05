@@ -8,7 +8,7 @@ export class UserService {
     const users = await this.prismaService.user.findMany({
       select: { name: true, email: true, createdAt: true },
     });
-    return { statusCode: 200, message: users };
+    return { statusCode: 200, data: users };
   }
   async findUser(email: string) {
     try {
@@ -25,7 +25,7 @@ export class UserService {
         },
       });
 
-      return { statusCode: 200, message: user };
+      return { statusCode: 200, data: user };
     } catch (error) {
       if (error.code == 'P2025')
         throw new ForbiddenException('Incorrect Credentials');
