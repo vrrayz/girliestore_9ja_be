@@ -27,6 +27,11 @@ export class ShopController {
     private cloudinaryService: CloudinaryService,
   ) {}
 
+  @Get('')
+  async shops() {
+    return this.shopService.findShops();
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Post('create')
   @UseInterceptors(

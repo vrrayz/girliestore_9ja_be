@@ -23,6 +23,27 @@ export class ShopService {
     }
     throw new ForbiddenException('Error fetching user data');
   }
+  async findShops() {
+    try {
+      const shops = await this.prismaService.shop.findMany({
+        include: {
+          owner: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              bio: true,
+              createdAt: true,
+            },
+          },
+        },
+      });
+
+      return { statusCode: 200, data: shops };
+    } catch (error) {
+      throw error;
+    }
+  }
   async findShop(id: number) {
     try {
       const shop = await this.prismaService.shop.findUniqueOrThrow({

@@ -3,6 +3,7 @@ import { PipeTransform, Injectable } from '@nestjs/common';
 @Injectable()
 export class ImageValidationPipe implements PipeTransform {
   transform(value: Express.Multer.File) {
+    if (!value) return { statusCode: 400, message: 'Image upload not found' };
     // "value" is an object containing the file's attributes and metadata
     const maxSize = Math.pow(1024, 2) * 2; // 2mb max size
     const validMimeTypes = ['jpeg', 'png'];
@@ -18,6 +19,7 @@ export class ImageValidationPipe implements PipeTransform {
 }
 export class ImagesValidationPipe implements PipeTransform {
   transform(value: Array<Express.Multer.File>) {
+    if (!value) return { statusCode: 400, message: 'Image upload not found' };
     // "value" is an object containing the file's attributes and metadata
     const maxSize = Math.pow(1024, 2) * 2; // 2mb max size
     const validMimeTypes = ['jpeg', 'png'];
