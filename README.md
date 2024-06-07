@@ -40,10 +40,14 @@ Since the majority of this project is still in developement, here's a list of th
 
 ```
 ************** TODO **************
-Add Product Price and Quantity to the models and CRUD endpoints
+User View Product Details
+User Order Product
+Store Owner / Admin View Order(s)
+Store Owner / Admin Starts Processing the Order
 **********************************
 
 ************** Finished **************
+Add Product Price and Quantity to the models and CRUD endpoints
 
 **************************************
 ```
