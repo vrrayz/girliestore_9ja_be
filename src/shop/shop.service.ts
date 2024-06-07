@@ -58,6 +58,15 @@ export class ShopService {
               createdAt: true,
             },
           },
+          products: {
+            include: {
+              photos: {
+                select: {
+                  url: true,
+                },
+              },
+            },
+          },
         },
       });
 
