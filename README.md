@@ -44,6 +44,10 @@ User View Product Details
 User Order Product
 Store Owner / Admin View Order(s)
 Store Owner / Admin Starts Processing the Order
+
+Add a Subcategory model and link it to the Category model
+A Category can have a sub category or not(optional)
+CRUD for Subcategories
 **********************************
 
 ************** Finished **************
