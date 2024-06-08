@@ -28,6 +28,11 @@ export class ProductController {
     private categoryService: CategoryService,
   ) {}
 
+  @Get('')
+  findProducts() {
+    return this.productService.findProducts();
+  }
+
   @Get(':id')
   findProduct(@Param('id', ParseIntPipe) id: number) {
     return this.productService.findProduct(id);
