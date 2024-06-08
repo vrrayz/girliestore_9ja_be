@@ -5,7 +5,22 @@ import { ProductDto } from './product.dto';
 @Injectable()
 export class ProductService {
   constructor(private prismaService: DbService) {}
+  async findProducts() {
+    try {
+      const products = await this.prismaService.product.findMany({
+        include: {
+          shop: {
+            include: { owner: true },
+          },
+          photos: true,
+        },
+      });
 
+      return { statusCode: 200, data: products };
+    } catch (error) {
+      throw error;
+    }
+  }
   async findProduct(id: number) {
     try {
       const category = await this.prismaService.product.findUniqueOrThrow({
