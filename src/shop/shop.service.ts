@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { ShopDto } from './shop.dto';
 import { UserService } from 'src/user/user.service';
@@ -72,7 +76,7 @@ export class ShopService {
 
       return { statusCode: 200, data: shop };
     } catch (error) {
-      if (error.code == 'P2025') throw new ForbiddenException('Shop not found');
+      if (error.code == 'P2025') throw new NotFoundException('Shop not found');
       throw error;
     }
   }
