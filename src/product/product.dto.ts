@@ -20,11 +20,11 @@ export class ProductDto {
   @IsNotEmpty()
   description: string;
 
-  @Type(() => Number)
   @IsInt()
+  @Type(() => Number)
   quantity: number;
 
-  @Type(() => Number)
   @IsNumber()
+  @Type(() => Number)
   price: number;
 }

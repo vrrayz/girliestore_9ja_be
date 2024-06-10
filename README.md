@@ -40,7 +40,6 @@ Since the majority of this project is still in developement, here's a list of th
 
 ```
 ************** TODO **************
-User View Product Details
 User Order Product
 Store Owner / Admin View Order(s)
 Store Owner / Admin Starts Processing the Order
@@ -52,7 +51,7 @@ CRUD for Subcategories
 
 ************** Finished **************
 Add Product Price and Quantity to the models and CRUD endpoints
-
+User View Product Details
 **************************************
 ```
 
