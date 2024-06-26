@@ -23,20 +23,21 @@ export class ProductService {
   }
   async findProduct(id: number) {
     try {
-      const category = await this.prismaService.product.findUniqueOrThrow({
+      const product = await this.prismaService.product.findUniqueOrThrow({
         where: { id },
         include: {
           shop: {
             include: { owner: true },
           },
+          category: true,
           photos: true,
         },
       });
 
-      return { statusCode: 200, data: category };
+      return { statusCode: 200, data: product };
     } catch (error) {
       if (error.code == 'P2025')
-        throw new NotFoundException('Category not found');
+        throw new NotFoundException('Product not found');
       throw error;
     }
   }
