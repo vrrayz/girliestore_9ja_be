@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   Req,
   UploadedFiles,
   UseGuards,
@@ -18,6 +19,7 @@ import { FilesResponse, ImagesValidationPipe } from 'src/file-type.validator';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { ShopService } from 'src/shop/shop.service';
 import { CategoryService } from 'src/category/category.service';
+import { SortOrder } from 'src/db/types';
 
 @Controller('product')
 export class ProductController {
@@ -29,8 +31,8 @@ export class ProductController {
   ) {}
 
   @Get('')
-  findProducts() {
-    return this.productService.findProducts();
+  findProducts(@Query('orderBy') orderBy: SortOrder) {
+    return this.productService.findProducts(orderBy);
   }
 
   @Get(':id')

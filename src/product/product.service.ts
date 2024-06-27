@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { ProductDto } from './product.dto';
+import { SortOrder } from 'src/db/types';
 
 @Injectable()
 export class ProductService {
   constructor(private prismaService: DbService) {}
-  async findProducts() {
+  async findProducts(sortOrder?: SortOrder) {
     try {
       const products = await this.prismaService.product.findMany({
         include: {
@@ -14,6 +15,7 @@ export class ProductService {
           },
           photos: true,
         },
+        orderBy: [{ createdAt: sortOrder || 'asc' }],
       });
 
       return { statusCode: 200, data: products };
