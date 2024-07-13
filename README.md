@@ -1,4 +1,3 @@
-
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -36,10 +35,12 @@ $ npm run test:cov
 ```
 
 ## Todo
+
 Since the majority of this project is still in developement, here's a list of things i am working on / have worked on.(This would help me to focus properly on the next steps i need to take while building this web app)
 
 ```
 ************** TODO **************
+Create a country states and cities model(ref for db seeding: https://documenter.getpostman.com/view/1134062/T1LJjU52#7255f1cc-b52d-41b3-b5a4-b1197db619b5)
 User Order Product
 Store Owner / Admin View Order(s)
 Store Owner / Admin Starts Processing the Order
@@ -54,4 +55,3 @@ Add Product Price and Quantity to the models and CRUD endpoints
 User View Product Details
 **************************************
 ```
-
