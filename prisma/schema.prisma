@@ -50,6 +50,7 @@ model Product {
   description String
   category    Category? @relation(fields: [categoryId], references: [id])
   photos      Photo[]
+  imageLabels Json?
   categoryId  Int?
   shop        Shop?     @relation(fields: [shopId], references: [id])
   shopId      Int

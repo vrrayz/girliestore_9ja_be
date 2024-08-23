@@ -15,7 +15,11 @@ import { ProductService } from './product.service';
 import { ProductDto } from './product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { FilesResponse, ImagesValidationPipe } from 'src/file-type.validator';
+import {
+  FilesResponse,
+  ImageLabelsValidationPipe,
+  ImagesValidationPipe,
+} from 'src/file-type.validator';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { ShopService } from 'src/shop/shop.service';
 import { CategoryService } from 'src/category/category.service';
@@ -46,6 +50,8 @@ export class ProductController {
   async createProduct(
     @Req() req,
     @Body() productDto: ProductDto,
+    @Body('imageLabels', ImageLabelsValidationPipe)
+    imageLabels: { className: string }[],
     @UploadedFiles(ImagesValidationPipe)
     files: FilesResponse,
   ) {
@@ -62,7 +68,10 @@ export class ProductController {
         );
         uploads.push(upload.secure_url);
       }
-      return this.productService.createProduct(productDto, uploads);
+      const newProductDto = { ...productDto, imageLabels };
+      console.log('PRoduct DTO === ', productDto);
+      console.log('image labels === ', imageLabels);
+      return this.productService.createProduct(newProductDto, uploads);
     } catch (error) {
       throw error;
     }
