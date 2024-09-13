@@ -37,27 +37,40 @@ model Shop {
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
-  name      String
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id            Int           @id @default(autoincrement())
+  name          String
+  products      Product[]
+  subCategories SubCategory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime?     @updatedAt
+}
+
+model SubCategory {
+  id         Int       @id @default(autoincrement())
+  name       String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  category    Category? @relation(fields: [categoryId], references: [id])
-  photos      Photo[]
-  imageLabels Json?
-  categoryId  Int?
-  shop        Shop?     @relation(fields: [shopId], references: [id])
-  shopId      Int
-  price       Float     @default(0)
-  quantity    Int       @default(0)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
+  id            Int          @id @default(autoincrement())
+  name          String
+  description   String
+  category      Category?    @relation(fields: [categoryId], references: [id])
+  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+  photos        Photo[]
+  imageLabels   Json?
+  categoryId    Int?
+  subCategoryId Int?
+  shop          Shop?        @relation(fields: [shopId], references: [id])
+  shopId        Int
+  price         Float        @default(0)
+  quantity      Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime?    @updatedAt
 }
 
 model Photo {

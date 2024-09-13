@@ -7,7 +7,13 @@ export class CategoryService {
   constructor(private prismaService: DbService) {}
 
   async categories() {
-    const categories = await this.prismaService.category.findMany({});
+    const categories = await this.prismaService.category.findMany({
+      select: {
+        id: true,
+        name: true,
+        subCategories: { select: { id: true, name: true } },
+      },
+    });
 
     return { statusCode: 200, data: categories };
   }
@@ -16,11 +22,19 @@ export class CategoryService {
     try {
       const category = await this.prismaService.category.findUniqueOrThrow({
         where: { id },
-        include: {
-          products: {
-            include: {
-              shop: true,
-              photos: true,
+        select: {
+          id: true,
+          name: true,
+          subCategories: {
+            select: {
+              id: true,
+              name: true,
+              products: {
+                include: {
+                  shop: true,
+                  photos: true,
+                },
+              },
             },
           },
         },
@@ -43,6 +57,16 @@ export class CategoryService {
       throw error;
     }
   }
+  async createSubCategory(data: CategoryDto, categoryId: number) {
+    try {
+      const subCategory = await this.prismaService.subCategory.create({
+        data: { ...data, categoryId: categoryId },
+      });
+      return { statusCode: 200, data: subCategory };
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateCategory(data: CategoryDto, id: number) {
     const category = await this.prismaService.category.update({
       where: {
@@ -52,6 +76,15 @@ export class CategoryService {
     });
     return { statusCode: 200, data: category };
   }
+  async updateSubCategory(data: CategoryDto, id: number) {
+    const subCategory = await this.prismaService.subCategory.update({
+      where: {
+        id,
+      },
+      data,
+    });
+    return { statusCode: 200, data: subCategory };
+  }
   async deleteCategory(id: number) {
     await this.prismaService.category.delete({
       where: {
@@ -59,5 +92,13 @@ export class CategoryService {
       },
     });
     return { statusCode: 200, message: 'Category Deleted' };
+  }
+  async deleteSubCategory(id: number) {
+    await this.prismaService.subCategory.delete({
+      where: {
+        id,
+      },
+    });
+    return { statusCode: 200, message: 'Sub Category Deleted' };
   }
 }
