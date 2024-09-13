@@ -39,6 +39,14 @@ export class ProductController {
     return this.productService.findProducts(orderBy);
   }
 
+  @Get('find-label')
+  findProductsByLabel(
+    @Query('label') label: string,
+    @Query('orderBy') orderBy: SortOrder,
+  ) {
+    return this.productService.findProductsByLabel(label, orderBy);
+  }
+
   @Get(':id')
   findProduct(@Param('id', ParseIntPipe) id: number) {
     return this.productService.findProduct(id);
@@ -51,7 +59,7 @@ export class ProductController {
     @Req() req,
     @Body() productDto: ProductDto,
     @Body('imageLabels', ImageLabelsValidationPipe)
-    imageLabels: { className: string }[],
+    imageLabels: { className: string },
     @UploadedFiles(ImagesValidationPipe)
     files: FilesResponse,
   ) {

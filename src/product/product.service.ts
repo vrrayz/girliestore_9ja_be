@@ -60,6 +60,32 @@ export class ProductService {
       throw error;
     }
   }
+  async findProductsByLabel(label: string, sortOrder?: SortOrder) {
+    const labels = label.split(',');
+    try {
+      for (let index = 0; index < labels.length; index++) {
+        const products = await this.prismaService.product.findMany({
+          where: {
+            imageLabels: {
+              path: '$.className',
+              string_contains: labels[index],
+            },
+          },
+          include: {
+            shop: {
+              include: { owner: true },
+            },
+            photos: true,
+          },
+          orderBy: [{ createdAt: sortOrder || 'asc' }],
+        });
+        if (products.length > 0) return { statusCode: 200, data: products };
+      }
+      return { statusCode: 200, data: [] };
+    } catch (error) {
+      throw error;
+    }
+  }
   //   async updateCategory(data: CategoryDto, id: number) {
   //     const category = await this.prismaService.category.update({
   //       where: {

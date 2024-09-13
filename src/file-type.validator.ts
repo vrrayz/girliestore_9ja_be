@@ -49,21 +49,23 @@ export class ImageLabelsValidationPipe implements PipeTransform {
   transform(value: any) {
     console.log('should be here', value);
     // console.log('converted value here', JSON.parse(value));
-    const transformedValue = JSON.parse(value);
+    const parsedValue = JSON.parse(value);
+    const transformedValue = { className: '' };
     try {
-      if (transformedValue) {
-        if (!Array.isArray(transformedValue))
+      if (parsedValue) {
+        if (!Array.isArray(parsedValue))
           throw new BadRequestException(
             'Validation failed: labels must be an array ' +
               typeof value +
               ' received',
           );
 
-        transformedValue.map((label) => {
+        parsedValue.map((label) => {
           if (!label.className)
             throw new BadRequestException(
               'Validation failed: labels must have a class name',
             );
+          transformedValue.className += label.className + ',';
         });
 
         return transformedValue;
