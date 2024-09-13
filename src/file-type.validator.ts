@@ -1,4 +1,10 @@
-import { PipeTransform, Injectable } from '@nestjs/common';
+import {
+  PipeTransform,
+  Injectable,
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 
 @Injectable()
 export class ImageValidationPipe implements PipeTransform {
@@ -36,6 +42,37 @@ export class ImagesValidationPipe implements PipeTransform {
         };
     }
     return { statusCode: 200, data: value };
+  }
+}
+
+export class ImageLabelsValidationPipe implements PipeTransform {
+  transform(value: any) {
+    console.log('should be here', value);
+    // console.log('converted value here', JSON.parse(value));
+    const parsedValue = JSON.parse(value);
+    const transformedValue = { className: '' };
+    try {
+      if (parsedValue) {
+        if (!Array.isArray(parsedValue))
+          throw new BadRequestException(
+            'Validation failed: labels must be an array ' +
+              typeof value +
+              ' received',
+          );
+
+        parsedValue.map((label) => {
+          if (!label.className)
+            throw new BadRequestException(
+              'Validation failed: labels must have a class name',
+            );
+          transformedValue.className += label.className + ',';
+        });
+
+        return transformedValue;
+      }
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
 export interface FileResponse {
