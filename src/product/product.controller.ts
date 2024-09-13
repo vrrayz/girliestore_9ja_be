@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -83,5 +84,16 @@ export class ProductController {
     } catch (error) {
       throw error;
     }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete(':id')
+  async deleteProduct(
+    @Req() req,
+    @Body('shopId', ParseIntPipe) shopId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    await this.shopService.shopAuthorization(shopId, req.user.email);
+    return this.productService.deleteProduct(id);
   }
 }

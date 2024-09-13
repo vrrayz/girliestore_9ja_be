@@ -95,12 +95,12 @@ export class ProductService {
   //     });
   //     return { statusCode: 200, data: category };
   //   }
-  //   async deleteCategory(id: number) {
-  //     await this.prismaService.category.delete({
-  //       where: {
-  //         id,
-  //       },
-  //     });
-  //     return { statusCode: 200, message: 'Category Deleted' };
-  //   }
+  async deleteProduct(id: number) {
+    await this.prismaService.product.delete({
+      where: {
+        id,
+      },
+    });
+    return { statusCode: 200, message: 'Product Deleted' };
+  }
 }
