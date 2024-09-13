@@ -18,6 +18,10 @@ export class ProductDto {
   @Type(() => Number)
   categoryId: number;
 
+  @IsNotEmpty()
+  @Type(() => Number)
+  subCategoryId: number;
+
   @IsString()
   @IsNotEmpty()
   name: string;

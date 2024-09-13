@@ -47,6 +47,8 @@ export class ImagesValidationPipe implements PipeTransform {
 
 export class ImageLabelsValidationPipe implements PipeTransform {
   transform(value: any) {
+    if (!value)
+      throw new HttpException('No image label found', HttpStatus.BAD_REQUEST);
     console.log('should be here', value);
     // console.log('converted value here', JSON.parse(value));
     const parsedValue = JSON.parse(value);

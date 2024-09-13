@@ -1,11 +1,19 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { ProductDto } from './product.dto';
 import { SortOrder } from 'src/db/types';
+import { CategoryService } from 'src/category/category.service';
 
 @Injectable()
 export class ProductService {
-  constructor(private prismaService: DbService) {}
+  constructor(
+    private prismaService: DbService,
+    private categoryService: CategoryService,
+  ) {}
   async findProducts(sortOrder?: SortOrder) {
     try {
       const products = await this.prismaService.product.findMany({
@@ -45,6 +53,15 @@ export class ProductService {
   }
   async createProduct(data: ProductDto, photos: string[]) {
     try {
+      const subCategory = await this.prismaService.subCategory.findFirstOrThrow(
+        { where: { id: data.subCategoryId } },
+      );
+      // console.log('The sub category is ', subCategory);
+      if (subCategory.categoryId !== data.categoryId) {
+        throw new BadRequestException(
+          'Sub category and Category does not match',
+        );
+      }
       const product = await this.prismaService.product.create({
         data: {
           ...data,
