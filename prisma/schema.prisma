@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  name         String
-  email        String   @unique
-  password     String?
-  bio          String?
-  authProvider String?
-  shops        Shop[]
-  role         String   @default("member") //super_admin , admin , member
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  id                     Int                     @id @default(autoincrement())
+  name                   String
+  email                  String                  @unique
+  password               String?
+  bio                    String?
+  authProvider           String?
+  shops                  Shop[]
+  role                   String                  @default("member") //super_admin , admin , member
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @default(now()) @updatedAt
+  ProductRecommendations ProductRecommendation[]
 }
 
 model Shop {
@@ -56,21 +57,32 @@ model SubCategory {
 }
 
 model Product {
-  id            Int          @id @default(autoincrement())
-  name          String
-  description   String
-  category      Category?    @relation(fields: [categoryId], references: [id])
-  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
-  photos        Photo[]
-  imageLabels   Json?
-  categoryId    Int?
-  subCategoryId Int?
-  shop          Shop?        @relation(fields: [shopId], references: [id])
-  shopId        Int
-  price         Float        @default(0)
-  quantity      Int          @default(0)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime?    @updatedAt
+  id                     Int                     @id @default(autoincrement())
+  name                   String
+  description            String
+  category               Category?               @relation(fields: [categoryId], references: [id])
+  subCategory            SubCategory?            @relation(fields: [subCategoryId], references: [id])
+  photos                 Photo[]
+  imageLabels            Json?
+  categoryId             Int?
+  subCategoryId          Int?
+  shop                   Shop?                   @relation(fields: [shopId], references: [id])
+  shopId                 Int
+  price                  Float                   @default(0)
+  quantity               Int                     @default(0)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime?               @updatedAt
+  ProductRecommendations ProductRecommendation[]
+}
+
+model ProductRecommendation {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+  productId Int
+  userId    Int
+
+  @@unique([productId, userId])
 }
 
 model Photo {

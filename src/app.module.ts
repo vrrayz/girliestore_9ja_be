@@ -10,6 +10,7 @@ import { UserService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
+import { ProductRecommendationModule } from './product-recommendation/product-recommendation.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductModule } from './product/product.module';
     CloudinaryModule,
     CategoryModule,
     ProductModule,
+    ProductRecommendationModule,
   ],
   controllers: [],
   providers: [UserService, JwtService],

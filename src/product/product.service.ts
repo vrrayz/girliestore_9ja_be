@@ -103,6 +103,17 @@ export class ProductService {
       throw error;
     }
   }
+  async findRandomProductsBySubCategory(subCategoryId: number, limit?: number) {
+    try {
+      const products: any = await this.prismaService
+        .$queryRaw`SELECT * FROM Product WHERE subCategoryId=${subCategoryId} ORDER BY RAND() LIMIT ${
+        limit || 10
+      }`; //this gives me a joined result with duplicate IDs so i have to reduce to take care of the duplicates
+      return { statusCode: 200, data: products };
+    } catch (error) {
+      throw error;
+    }
+  }
   //   async updateCategory(data: CategoryDto, id: number) {
   //     const category = await this.prismaService.category.update({
   //       where: {

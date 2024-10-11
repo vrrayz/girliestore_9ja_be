@@ -40,6 +40,17 @@ export class ProductController {
     return this.productService.findProducts(orderBy);
   }
 
+  @Get('random-subcategory/:subCategoryId')
+  findRandomProductBySubCategory(
+    @Query('limit') limit: number,
+    @Param('subCategoryId', ParseIntPipe) subCategoryId: number,
+  ) {
+    return this.productService.findRandomProductsBySubCategory(
+      subCategoryId,
+      limit,
+    );
+  }
+
   @Get('find-label')
   findProductsByLabel(
     @Query('label') label: string,
