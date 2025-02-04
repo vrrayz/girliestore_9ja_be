@@ -89,8 +89,8 @@ export class ProductController {
         uploads.push(upload.secure_url);
       }
       const newProductDto = { ...productDto, imageLabels };
-      console.log('PRoduct DTO === ', productDto);
-      console.log('image labels === ', imageLabels);
+      // console.log('PRoduct DTO === ', productDto);
+      // console.log('image labels === ', imageLabels);
       return this.productService.createProduct(newProductDto, uploads);
     } catch (error) {
       throw error;

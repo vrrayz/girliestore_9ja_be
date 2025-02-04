@@ -40,4 +40,16 @@ export class ProductDto {
 
   @IsOptional()
   imageLabels: any;
+
+  @IsNotEmpty()
+  @Type(() => Number)
+  size: number;
+
+  @IsNotEmpty()
+  @IsString()
+  unit: string;
+
+  @IsNotEmpty()
+  @IsString()
+  color: string;
 }

@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import * as argon from 'argon2';
 
 const prisma = new PrismaClient();
+const extraAdditions = { size: 40, unit: 'cm', color: 'red' };
 
 async function main() {
   const hashedPassword = await argon.hash('password');
@@ -61,6 +62,9 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              size: 40,
+              unit: 'cm',
+              color: 'red',
             },
             {
               name: 'Second Top',
@@ -70,6 +74,9 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              size: 40,
+              unit: 'cm',
+              color: 'red',
             },
             {
               name: 'Third Top',
@@ -79,6 +86,9 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              size: 40,
+              unit: 'cm',
+              color: 'red',
             },
             {
               name: 'Fourth Top',
@@ -88,6 +98,9 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              size: 40,
+              unit: 'cm',
+              color: 'red',
             },
             {
               name: 'Fifth Top',
@@ -97,6 +110,9 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              size: 40,
+              unit: 'cm',
+              color: 'red',
             },
             {
               name: 'Sixth Top',
@@ -106,6 +122,9 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              size: 40,
+              unit: 'cm',
+              color: 'red',
             },
           ],
         }),
@@ -126,6 +145,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Second Dress',
@@ -135,6 +155,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Third Dress',
@@ -144,6 +165,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Fourth Dress',
@@ -153,6 +175,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Fifth Dress',
@@ -162,6 +185,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Sixth Dress',
@@ -171,6 +195,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
           ],
         }),
@@ -191,6 +216,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Second Bottom',
@@ -200,6 +226,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Third Bottom',
@@ -209,6 +236,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Fourth Bottom',
@@ -218,6 +246,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Fifth Bottom',
@@ -227,6 +256,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
             {
               name: 'Sixth Bottom',
@@ -236,6 +266,7 @@ async function main() {
               shopId: CURRENT_SHOP.id,
               price: Number((Math.random() * 10000).toFixed(2)),
               quantity: (Math.random() + 1) * 100,
+              ...extraAdditions,
             },
           ],
         }),

@@ -28,7 +28,7 @@ export class ImagesValidationPipe implements PipeTransform {
     if (!value) return { statusCode: 400, message: 'Image upload not found' };
     // "value" is an object containing the file's attributes and metadata
     const maxSize = Math.pow(1024, 2) * 2; // 2mb max size
-    const validMimeTypes = ['jpeg', 'png'];
+    const validMimeTypes = ['jpeg', 'png', 'webp'];
     for (let index = 0; index < value.length; index++) {
       if (value[index].size > maxSize)
         return { statusCode: 400, message: 'Image size exceeds 2mb' };
