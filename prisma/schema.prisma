@@ -91,9 +91,11 @@ model ProductView {
   user      User?     @relation(fields: [userId], references: [id])
   userId    Int?
   deviceId  String    @unique
-  viewedAt  DateTime  @updatedAt
+  viewedAt  DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+
+  @@unique([userId, deviceId])
 }
 
 model ProductEngagement {

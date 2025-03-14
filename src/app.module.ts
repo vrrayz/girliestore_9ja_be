@@ -11,6 +11,8 @@ import { JwtService } from '@nestjs/jwt';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { ProductRecommendationModule } from './product-recommendation/product-recommendation.module';
+import { ProductViewModule } from './product-view/product-view.module';
+import { ProductEngagementModule } from './product-engagement/product-engagement.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { ProductRecommendationModule } from './product-recommendation/product-re
     CategoryModule,
     ProductModule,
     ProductRecommendationModule,
+    ProductViewModule,
+    ProductEngagementModule,
   ],
   controllers: [],
   providers: [UserService, JwtService],
