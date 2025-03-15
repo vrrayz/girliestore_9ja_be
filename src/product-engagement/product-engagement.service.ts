@@ -6,12 +6,21 @@ import { ProductEngagementDto } from './product-engagement.dto';
 export class ProductEngagementService {
   constructor(private prismaService: DbService) {}
 
-  async createProductEngagement(data: ProductEngagementDto) {
+  async createOrUpdateProductEngagement(
+    data: ProductEngagementDto,
+    scoreAction: 'increment' | 'decrement',
+  ) {
     try {
       const productEngagement =
-        await this.prismaService.productEngagement.create({
-          data: {
+        await this.prismaService.productEngagement.upsert({
+          where: {
+            productId: data.productId,
+          },
+          create: {
             ...data,
+          },
+          update: {
+            score: { [scoreAction]: data.score },
           },
         });
       return { statusCode: 200, data: productEngagement };

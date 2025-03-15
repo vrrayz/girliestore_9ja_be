@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { ProductViewDto } from './product-view.dto';
+import { ProductEngagementService } from 'src/product-engagement/product-engagement.service';
 
 @Injectable()
 export class ProductViewService {
-  constructor(private prismaService: DbService) {}
+  constructor(
+    private prismaService: DbService,
+    private engagementService: ProductEngagementService,
+  ) {}
   async createProductView(data: ProductViewDto) {
     try {
       let existingView = await this.prismaService.productView.findFirst({
@@ -19,18 +23,13 @@ export class ProductViewService {
         existingView = await this.prismaService.productView.create({
           data: { ...data },
         });
-        await this.prismaService.productEngagement.upsert({
-          where: {
-            productId: existingView.productId,
-          },
-          create: {
+        this.engagementService.createOrUpdateProductEngagement(
+          {
             productId: existingView.productId,
             score: 1,
           },
-          update: {
-            score: { increment: 1 },
-          },
-        });
+          'increment',
+        );
       }
       existingView = await this.prismaService.productView.update({
         where: { id: existingView.id },

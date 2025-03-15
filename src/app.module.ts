@@ -13,6 +13,7 @@ import { ProductModule } from './product/product.module';
 import { ProductRecommendationModule } from './product-recommendation/product-recommendation.module';
 import { ProductViewModule } from './product-view/product-view.module';
 import { ProductEngagementModule } from './product-engagement/product-engagement.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductEngagementModule } from './product-engagement/product-engagement
     ProductRecommendationModule,
     ProductViewModule,
     ProductEngagementModule,
+    WishlistModule,
   ],
   controllers: [],
   providers: [UserService, JwtService],

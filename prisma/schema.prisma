@@ -106,7 +106,7 @@ model ProductEngagement {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   //For tracking engagements: 
-  //   Sales	5.0	Most reliable indicator of actual purchases
+  // Sales	5.0	Most reliable indicator of actual purchases
   // Add to Cart	3.0	Strong purchase intent, but may not complete
   // Wishlist	2.0	Indicates interest but lower commitment
   // Page Views	1.0	Weak signal, users might just be browsing
