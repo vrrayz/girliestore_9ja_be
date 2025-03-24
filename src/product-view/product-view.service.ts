@@ -15,7 +15,9 @@ export class ProductViewService {
         where: {
           OR: [
             ...(data.userId ? [{ userId: data.userId }] : []),
-            { deviceId: data.deviceId },
+            {
+              AND: [{ deviceId: data.deviceId }, { productId: data.productId }],
+            },
           ],
         },
       });

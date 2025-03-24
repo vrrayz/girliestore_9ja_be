@@ -10,6 +10,25 @@ export class WishlistService {
     private engagementService: ProductEngagementService,
   ) {}
 
+  async findWishlist(userId: number) {
+    try {
+      const wishlist = await this.prismaService.wishlist.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          product: { include: { photos: true } },
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+      return { statusCode: 200, data: wishlist };
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async createWishlist(data: WishlistDto) {
     try {
       const wishlist = await this.prismaService.wishlist.findFirst({
@@ -25,6 +44,9 @@ export class WishlistService {
         data: {
           userId: data.userId,
           productId: data.productId,
+        },
+        include: {
+          product: { include: { photos: true } },
         },
       });
       await this.engagementService.createOrUpdateProductEngagement(

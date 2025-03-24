@@ -17,7 +17,8 @@ export class ProductEngagementService {
             productId: data.productId,
           },
           create: {
-            ...data,
+            productId: data.productId,
+            score: data.score,
           },
           update: {
             score: { [scoreAction]: data.score },

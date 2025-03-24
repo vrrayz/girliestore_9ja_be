@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class ProductEngagementDto {
   //   @IsNumber()
@@ -8,5 +8,9 @@ export class ProductEngagementDto {
   productId: number;
 
   @IsNumber()
+  @Type(() => Number)
   score: number;
+
+  @IsOptional()
+  scoreAction?: 'increment' | 'decrement';
 }

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Req,
@@ -15,6 +16,13 @@ import { WishlistDto } from './wishlist.dto';
 @Controller('wishlist')
 export class WishlistController {
   constructor(private wishlistService: WishlistService) {}
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('')
+  async findWishlist(@Req() req: UserRequest) {
+    const query = await this.wishlistService.findWishlist(req.user.id);
+    return query;
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('create')
