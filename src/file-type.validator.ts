@@ -25,10 +25,11 @@ export class ImageValidationPipe implements PipeTransform {
 }
 export class ImagesValidationPipe implements PipeTransform {
   transform(value: Array<Express.Multer.File>) {
-    if (!value) return { statusCode: 400, message: 'Image upload not found' };
+    if (!value || value.length == 0)
+      return { statusCode: 400, message: 'Image upload not found' };
     // "value" is an object containing the file's attributes and metadata
     const maxSize = Math.pow(1024, 2) * 2; // 2mb max size
-    const validMimeTypes = ['jpeg', 'png', 'webp'];
+    const validMimeTypes = ['jpeg', 'png', 'webp', 'jpg'];
     for (let index = 0; index < value.length; index++) {
       if (value[index].size > maxSize)
         return { statusCode: 400, message: 'Image size exceeds 2mb' };
