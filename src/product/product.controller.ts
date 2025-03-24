@@ -40,6 +40,11 @@ export class ProductController {
     return this.productService.findProducts(orderBy);
   }
 
+  @Get('trending')
+  findTrendingProducts() {
+    return this.productService.findTrendingProducts();
+  }
+
   @Get('random-subcategory/:subCategoryId')
   findRandomProductBySubCategory(
     @Query('limit') limit: number,
@@ -65,7 +70,7 @@ export class ProductController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(FilesInterceptor('file', 2, { dest: 'image' }))
+  @UseInterceptors(FilesInterceptor('file', 4, { dest: 'image' }))
   @Post('create')
   async createProduct(
     @Req() req,
@@ -77,21 +82,21 @@ export class ProductController {
   ) {
     await this.categoryService.findCategory(productDto.categoryId);
     await this.shopService.shopAuthorization(productDto.shopId, req.user.email);
-    if (files.statusCode !== 200) {
+    // console.log('The files here === ', files);
+    if (!files || files.statusCode !== 200 || files.data.length == 0) {
+      // console.log('Nothing was passed here');
       return files;
     }
-    const uploads = [];
+
     try {
-      for (let index = 0; index < files.data.length; index++) {
-        const upload = await this.cloudinaryService.uploadImage(
-          files.data[index],
-        );
-        uploads.push(upload.secure_url);
-      }
+      const uploads = await Promise.all(
+        files.data.map((file) => this.cloudinaryService.uploadImage(file)),
+      );
+      const imageUrls = uploads.map((upload) => upload.secure_url);
       const newProductDto = { ...productDto, imageLabels };
       // console.log('PRoduct DTO === ', productDto);
       // console.log('image labels === ', imageLabels);
-      return this.productService.createProduct(newProductDto, uploads);
+      return this.productService.createProduct(newProductDto, imageUrls);
     } catch (error) {
       throw error;
     }
