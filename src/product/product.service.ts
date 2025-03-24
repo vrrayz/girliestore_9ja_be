@@ -56,7 +56,6 @@ export class ProductService {
       const subCategory = await this.prismaService.subCategory.findFirstOrThrow(
         { where: { id: data.subCategoryId } },
       );
-      // console.log('The sub category is ', subCategory);
       if (subCategory.categoryId !== data.categoryId) {
         throw new BadRequestException(
           'Sub category and Category does not match',
@@ -109,6 +108,29 @@ export class ProductService {
         .$queryRaw`SELECT * FROM Product WHERE subCategoryId=${subCategoryId} ORDER BY RAND() LIMIT ${
         limit || 10
       }`; //this gives me a joined result with duplicate IDs so i have to reduce to take care of the duplicates
+      return { statusCode: 200, data: products };
+    } catch (error) {
+      throw error;
+    }
+  }
+  async findTrendingProducts() {
+    try {
+      const products = await this.prismaService.productEngagement.findMany({
+        include: {
+          product: {
+            include: {
+              photos: true,
+              category: true,
+            },
+          },
+          // shop: {
+          //   include: { owner: true },
+          // },
+          // photos: true,
+        },
+        orderBy: [{ score: 'desc' }],
+      });
+
       return { statusCode: 200, data: products };
     } catch (error) {
       throw error;
